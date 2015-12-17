@@ -132,15 +132,28 @@ However, there has been little effort to use recommendation systems to help user
 
 Matejka and colleagues developed a collaborative filtering-based approach to recommend commands in AutoCAD, a computer aided drafting software, called CommunityCommands~\cite{matejka2009communitycommands}. The researchers of CommunityCommand showed that the collaborative filtering derived command recommendations were preferred by the AutoCAD users over the history based recommendation approach used in OWL.
 
-\texttt{What should be the domain of the recommendations - the user or the spreadsheet}
-
-In this paper, we build on these prior works by applying the concept of recommender systems to recommend functions in spreadsheets. We use the Fuse spreadsheet corpus as a source of function usage preference of the spreadsheet users' community and recommend functions contextualized to an individual spreadsheet by applying a slightly modified collaborative filtering algorithm.
+In this paper, we build on these prior works by applying the concept of recommender systems to recommend functions in spreadsheets. We use the Fuse spreadsheet corpus as a source of function usage preference of the spreadsheet users' community and recommend functions contextualized to an individual user by applying collaborative filtering algorithm.
 
 \section{Methodology}
+According to the formal definition, collaborative filtering is a method of making automatic predictions (filtering) about the interests of a user by collecting preferences or taste information from many users (collaborating) \footnote{https://en.wikipedia.org/wiki/Collaborative\_filtering}. Although collaborative filtering can be applied in many ways, most approaches falling under the category of user-based collaborative filtering are composed of mainly two distinct steps - find the users with similar preference patterns to that of the input user and then use the preference of the similar users to obtain predictions for the input user.
 
-\subsection{Fuse Spreadsheet Corpus}
+To apply this technique, we need to measure the similarity between two users. In order to do so, we define a vector for each user's spreadsheets and compare the vectors to find the similar preferences. Our function vector is defined such that the vector $V$ for an individual user consists of cells, where each cell $V_i$ represents the usage frequency of the function $f_i$.
 
-\subsection{Modified Collaborative Filtering}
+To generate the input user's vector we extract function usage frequencies from multiple files created by the user. The more spreadsheets created by the same user is given as input the better representative vector for the user we get. As for the potential pool of similar user vectors, we decided to use Fuse, a spreadsheet corpus containing nearly 250 thousand unique spreadsheets extracted from the Common Crawl\footnote{http://www.commoncrawl.org} index~\cite{barik2015fuse}. The authors of Fuse also extracted meta information such as created by and function usage frequencies. We classified the spreadsheet meta information and discarded any spreadsheet that did not use any function. This reduced the number of spreadsheets under consideration to less than 13 thousand. These spreadsheets were then grouped by the user name \texttt{(There are a large number of spreadsheets where this information is not present, how do we refer to them in the paper?)}. We proceeded to extract the function vector from each of these groups in the similar way the input user vector was extracted. The final number of function vectors in this pool of potential similar user vectors was \texttt{insert actual number from modified code here}.
+
+To measure the similarity between users, we used the cosine similarity function, which measures the cosine of the angle between the user's vectors as described above. Given the function vector for two users $i$ and $j$ as $V_i$ and $V_j$ respectively, the similarity function is:
+
+\begin{center}
+	\[
+	similarity(i, j) = \cos({}_{V_i}\theta_{V_j}) = \frac{V_i \cdot V_j}{||V_i|| ||V_j||}
+	\]
+\end{center} 
+
+When the similarity function evaluates closer to 0, the vectors are substantially orthogonal to each other, which indicates that the users are dissimilar. A similarity function value of closer to 1, indicates that the vectors are nearly collinear and the users are quite similar. For ease of our implementation we used the complement of the cosine similarity: $1 - similarity(i,j)$, which is often commonly referred to as cosine distance.
+
+To find the similar user vectors for the given vector, we calculate the similarity function value between each of the vector in the pool and the input vector, after this the vectors in the pool are sorted based on their cosine distance in ascending order. We selected $n$ most similar vectors from this ordered list, where $n$ is a tuning parameter, which in our case was between 3 and 5.
+
+We compare the frequencies of each individual function between each of the similar vector and the input vector, and add a function to the recommendation set only if the function had a frequency value in one of the similar vectors but not in the input vector. The set of recommended functions is then ordered by the cumulative frequency of the functions in the similar vectors, this way the functions in the recommendation list appear in order of their usage in the similar vectors.
 
 \section{Evaluation}
 
