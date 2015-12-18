@@ -122,11 +122,11 @@ Researchers have been assembling and preserving spreadsheet corpora for the purp
 The remainder of the paper is structured as follows. We first review previous work on recommendation systems in softwares and related work on making spreadsheet formula usage efficient (Section II). We then provide details of the spreadsheet corpus used for our system and the details of the algorithm used (Section III) before describing our evaluation measures (Section IV) and their outcome (Section V). We discuss the various aspects of our system (Section VI) along with the limitations and future works (Section VII) based on our contribution in this paper afterwards.
 
 \section{Related Work}
-Recommender systems have been applied with success in both academia and industry to provide personalized suggestions and help users cope with overabundance of information~\cite{hill1995recommending, resnick1994grouplens,shardanand1995social}. Recommender systems assist users by determining  products and services of interest to the user in a scenario when the number and diversity of options exceeds the user's decision making capability. 
+Recommender systems are used generally to produce a list of predictions based on the preference of an user and the similarity of preferences of other users. In recent years, recommender systems have become quite popular and have been applied successfully in multiple sectors of business and academia~\cite{hill1995recommending, resnick1994grouplens,shardanand1995social}. Recommender systems assist users by determining  products and services of interest to the user in a scenario when the number and diversity of options exceeds the user's decision making capability. 
 
-Collaborative filtering is one of the most prominent recommending technologies available. The core concept of collaborative filtering is to apply a nearest neighbor method between a user's ratings or preferences and the preference of a large user community, and provide the user with recommendations by extrapolating based on how her selection or preference relate to that of the community. Collaborative filtering has been applied to recommend a fringe of products and services~\cite{miller2003movielens, resnick1994grouplens, linden2003amazon, liu2003adaptive, mcnee2006don, farzan2006social, hsu2008personalized}. 
+Collaborative filtering is one of the most prominent recommending technologies available. The core concept of collaborative filtering is to apply a nearest neighbor method between a user's preferences and the preference of a large user community, and provide the user with recommendations by extrapolating based on how her selection or preference relate to that of the community. Collaborative filtering has been applied to recommend a fringe of products and services, ranging from movies to school courses~\cite{miller2003movielens, resnick1994grouplens, linden2003amazon, liu2003adaptive, mcnee2006don, farzan2006social, hsu2008personalized}. 
 
-However, there has been little effort to use recommendation systems to help users of a large and complicated software system to learn and explore the functionalities and commands of the system. One of the notable attempts to use recommender systems to recommend command is the OWL~\cite{linton2000owl}, which makes command recommendations to Microsoft Word users. OWL recommends commands to an individual if she is not using certain commands at all but the community is using them on a frequent basis.
+However, there has been little effort to use recommendation systems to help users of a large   software system with vast set of functionality to learn these functionalities. One of the notable attempts to use recommender systems to recommend command is the OWL~\cite{linton2000owl}, which makes command recommendations to Microsoft Word users. OWL recommends commands to an individual if she is not using certain commands at all but the community is using them on a frequent basis.
 
 Matejka and colleagues developed a collaborative filtering-based approach to recommend commands in AutoCAD, a computer aided drafting software, called CommunityCommands~\cite{matejka2009communitycommands}. The researchers of CommunityCommands showed that the collaborative filtering derived command recommendations were preferred by the AutoCAD users over the history based recommendation approach used in OWL.
 
@@ -143,9 +143,9 @@ To measure the similarity between users, we used the cosine similarity function,
 
 \begin{center}
 	\[
-	similarity(i, j) = \cos({}_{V_i}\theta_{V_j}) = \frac{V_i \cdot V_j}{||V_i|| ||V_j||}
+	similarity(i, j) = \cos({}_{V_i}\theta_{V_j}) = \frac{V_i \cdot V_j}{||V_i|| ||V_j||} = \frac{\sum_{k=1}^{n} V_{i_k}V_{j_k}}{\sqrt{\sum_{k=1}^{n} {V_{i_k}}^2  {V_{j_k}}^2}}
 	\]
-\end{center} 
+\end{center}
 
 When the similarity function evaluates closer to 0, the vectors are substantially orthogonal to each other, which indicates that the users are dissimilar. A similarity function value of closer to 1, indicates that the vectors are nearly collinear and the users are quite similar. For ease of our implementation we used the complement of the cosine similarity: $1 - similarity(i,j)$, which is often commonly referred to as \textit{cosine distance}.
 
