@@ -196,13 +196,13 @@ Where $k$ presents each distinct partition and $n$ is $|V_i|\choose p$. We calcu
 \end{enumerate}
 
 \section{Limitations \& Future Work}
-From the results presented here, there are a number of attributes of system that provides opportunities for future work.
+From the results presented here, there are a number of attributes of the approaches applied here, that provides opportunities for future work.
 
-One of the limitation of the recommendation system was that the pool of potential similar function vectors was small, given that only approximately 5\% of the Fuse spreadsheets used formulas. This however can be alleviated considerably by incorporating other existing spreadsheet corpus like Enron~\cite{hermans2014enron} and EUSES~\cite{fisher2005euses} into the user function vectors pool.
+One of the limitation of the recommendation systems used here was that the \textit{pool} of potential similar function vectors was small, given that only approximately 5\% of the Fuse spreadsheets used formulas. This however can be alleviated considerably by incorporating other existing spreadsheet corpus like Enron~\cite{hermans2014enron} and EUSES~\cite{fisher2005euses} into the user function vectors \textit{pool}.
 
-We also made an explicit assumption that the active user's spreadsheets will result in a function vector with some non-zero frequencies. If the active user's spreadsheets are simple data dumps without any function usage, the recommender system can't produce viable recommendations as the similar user vectors in this case will be the ones with lowest function frequency values.
+We also made an explicit assumption for the user-based collaborative filtering algorithm that the active user's spreadsheets will result in a function vector with some non-zero frequencies. If the active user's spreadsheets are simple data dumps without any function usage, the recommender system can't produce useful recommendations as the similar user vectors in this case will be the ones with lowest function frequency values. However, the most popular algorithm can still recommend functions in this case.
 
-Spreadsheet files, being static, don't contain any temporal or sequential information regarding function discovery. Given this information, it will be possible to recommend more contextualized and personalized functions for the spreadsheet users.
+Spreadsheet files, being static, don't contain any temporal or sequential information regarding function discovery. Given the function discovery information, it will be possible to apply the discovery variations of the algorithms as described by Murphy-Hill and colleagues, which produced the recommendations with the highest useful rates in their automated evaluation~\cite{murphy2012improving}.
 
 Although we used an automated method to evaluate our system, it cannot replace the recommendations being evaluated by real life spreadsheet users. This type of evaluation can prove how much useful the recommendations actually are. It is possible to conduct a survey, either web-based or real life, where we generate recommendations based on spreadsheet users in the industry and have the actual owners of the spreadsheets evaluate their personalized function recommendations.
 
